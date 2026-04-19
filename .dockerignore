@@ -1,0 +1,10 @@
+.git
+.gitignore
+.github
+.DS_Store
+*.tiff
+Dockerfile
+.dockerignore
+README.md
+hero-variations.html
+eye-variations.html
