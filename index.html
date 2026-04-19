@@ -120,6 +120,10 @@
       list-style: none
     }
 
+    nav ul .nav-cta {
+      display: none;
+    }
+
     nav a {
       color: var(--ink-soft);
       text-decoration: none;
@@ -129,6 +133,41 @@
 
     nav a:hover {
       color: var(--ink)
+    }
+
+    .nav-burger {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav-burger span {
+      display: block;
+      width: 16px;
+      height: 1.3px;
+      background: var(--ink);
+      transition: transform .25s ease, opacity .2s ease;
+    }
+
+    nav.is-open .nav-burger span:nth-child(1) {
+      transform: translateY(6.3px) rotate(45deg);
+    }
+
+    nav.is-open .nav-burger span:nth-child(2) {
+      opacity: 0;
+    }
+
+    nav.is-open .nav-burger span:nth-child(3) {
+      transform: translateY(-6.3px) rotate(-45deg);
     }
 
     .nav-cta {
@@ -245,6 +284,43 @@
       text-transform: uppercase;
       border-bottom: 1px solid var(--ink);
       padding-bottom: 4px;
+    }
+
+    .hero-docs {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .doc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: .02em;
+      border-bottom: 1px solid var(--line-strong);
+      padding-bottom: 2px;
+      transition: color .2s ease, border-color .2s ease;
+    }
+
+    .doc-link:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .doc-link svg {
+      width: 10px;
+      height: 10px;
+      opacity: .7;
+    }
+
+    .doc-sep {
+      color: var(--ink-faint);
+      font-size: 13px;
     }
 
     /* HERO VISUAL — ENGRAVED EYE */
@@ -1384,8 +1460,61 @@
         font-size: 20px
       }
 
+      .nav-burger {
+        display: inline-flex;
+      }
+
+      nav .wrap > .nav-cta {
+        display: none;
+      }
+
       nav ul {
-        display: none
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 24px 24px;
+        background: rgba(250, 246, 238, .98);
+        backdrop-filter: saturate(140%) blur(12px);
+        -webkit-backdrop-filter: saturate(140%) blur(12px);
+        border-bottom: 1px solid var(--line);
+        transform: translateY(-8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .22s ease, transform .22s ease;
+      }
+
+      nav.is-open ul {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      nav ul li {
+        border-bottom: 1px solid var(--line);
+      }
+
+      nav ul li:last-child {
+        border-bottom: none;
+      }
+
+      nav ul a {
+        display: block;
+        padding: 18px 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22px;
+        letter-spacing: -.005em;
+        color: var(--ink);
+      }
+
+      nav ul .nav-cta {
+        margin-top: 16px;
+        display: inline-flex;
+        padding: 12px 20px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
       }
     }
   </style>
@@ -1406,12 +1535,17 @@
         </svg>
         Teary
       </a>
-      <ul>
+      <ul id="nav-menu">
         <li><a href="#science">Science</a></li>
+        <li><a href="#toolkit">Home kit</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#range">Range</a></li>
+        <li><a href="#range" class="nav-cta">Commission a portrait</a></li>
       </ul>
       <a href="#range" class="nav-cta">Commission a portrait</a>
+      <button class="nav-burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
@@ -1438,6 +1572,17 @@
               </svg>
             </a>
             <a href="#science" class="link">Read the science</a>
+          </div>
+          <div class="hero-docs">
+            <a href="report.html" class="doc-link" target="_blank" rel="noopener">
+              <span>Classification report</span>
+              <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </a>
+            <span class="doc-sep" aria-hidden="true">·</span>
+            <a href="assets/teary-paper.pdf" class="doc-link" target="_blank" rel="noopener">
+              <span>Research paper (PDF)</span>
+              <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </a>
           </div>
         </div>
         <div class="hero-art" aria-hidden="true">
@@ -1557,7 +1702,8 @@
             <img src="assets/diseases/healthy.png" alt="AFM scan of a healthy dried tear">
           </div>
           <div>
-            <div class="label">Healthy</div>
+            <div class="label">Healthy<br><em
+                style="font-style:italic;font-weight:400;color:var(--ink-soft);font-size:18px">baseline</em></div>
             <p class="pattern">Even branching, soft radial symmetry, clean edges.</p>
           </div>
         </div>
@@ -1584,7 +1730,8 @@
             <img src="assets/diseases/glukon.png" alt="AFM scan of a dried tear from a glaucoma patient">
           </div>
           <div>
-            <div class="label">Glaucoma</div>
+            <div class="label">Glaucoma<br><em
+                style="font-style:italic;font-weight:400;color:var(--ink-soft);font-size:18px">ocular pressure</em></div>
             <p class="pattern">Sparse fibrillar lines, broken secondary branching.</p>
           </div>
         </div>
@@ -1610,7 +1757,8 @@
             <img src="assets/diseases/dry-eye.png" alt="AFM scan of a dried tear from a dry-eye patient">
           </div>
           <div>
-            <div class="label">Dry eye</div>
+            <div class="label">Dry eye<br><em
+                style="font-style:italic;font-weight:400;color:var(--ink-soft);font-size:18px">syndrome</em></div>
             <p class="pattern">Shortened ferns, coarse lipid aggregates, low coverage.</p>
           </div>
         </div>
@@ -1662,27 +1810,26 @@
           <li>
             <div class="tag">Binary</div>
             <div class="fig">94.1<span>%</span></div>
-            <div class="sub">macro-accuracy · F1 0.894</div>
+            <div class="sub">f1-macro</div>
             <p>Healthy vs. disease. Clear margin, stable across folds.</p>
           </li>
           <li>
             <div class="tag">Three-class</div>
             <div class="fig">82.4<span>%</span></div>
-            <div class="sub">macro-accuracy · F1 0.664</div>
+            <div class="sub">f1-macro</div>
             <p>Healthy · autoimmune · metabolic. The useful clinical split.</p>
           </li>
           <li>
             <div class="tag">Five-class</div>
-            <div class="fig">51.0<span>%</span></div>
-            <div class="sub">macro-accuracy · F1 0.542</div>
+            <div class="fig">64.7<span>%</span></div>
+            <div class="sub">f1-macro</div>
             <p>Full diagnosis from a single tear. Where the frontier is.</p>
           </li>
         </ul>
         <p class="results-foot">
-          The same architecture, evaluated image-level with patients bleeding
-          across folds, scores 89.6% on five-class. Patient-stratified it drops
-          to 51.0%. That 38-point gap is how much of a medical-imaging paper
-          can be data leakage. Our numbers are the honest side of it.
+          All numbers are f1-macro on a patient-stratified split — no patient
+          appears on both sides of training and evaluation. One drop, one
+          story, one honest score.
         </p>
       </div>
     </div>
@@ -1702,49 +1849,39 @@
         </div>
 
         <div class="toolkit-copy">
-          <span class="eyebrow">The toolkit</span>
+          <span class="eyebrow">Feasibility · one-time test</span>
           <h2 class="display">
-            One tear.<br>
-            <span class="italic">Four instruments.</span>
+            A home kit<br>
+            <span class="italic">you can cry into.</span>
           </h2>
           <p class="section-lead">
-            The kit stays small on purpose. Enough to capture a single drop
-            cleanly, label it, and move it onto the AFM substrate without a
-            trace of the room getting in the way.
+            Cry at home, mail the sample, get your memory imprint back. The
+            tear survives the journey — we checked.
           </p>
 
           <ol class="toolkit-list">
             <li>
               <span class="num">01</span>
               <div>
-                <h4>Sample vial</h4>
-                <p>Borosilicate, labeled per donor. The tear lives here
-                   between the eye and the microscope.</p>
+                <h4>Biologically stable in transit</h4>
+                <p>Scientists at UPJŠ confirmed the tear's crystalline
+                   signature holds between collection and the microscope.</p>
               </div>
             </li>
             <li>
               <span class="num">02</span>
               <div>
-                <h4>Petri dish &amp; dropper</h4>
-                <p>A single microliter is transferred to the glass substrate
-                   and left to dry in ambient air, undisturbed.</p>
+                <h4>Resistant to heat and transport</h4>
+                <p>The dried drop tolerates ambient shipping without losing
+                   the dendritic structure the model needs to read it.</p>
               </div>
             </li>
             <li>
               <span class="num">03</span>
               <div>
-                <h4>Tweezers</h4>
-                <p>The slide is handled only at the edge. No fingerprints,
-                   no oils, no contaminants riding alongside the sample.</p>
-              </div>
-            </li>
-            <li>
-              <span class="num">04</span>
-              <div>
-                <h4>pH strip</h4>
-                <p>A two-second sanity check. Healthy tears sit near pH 7;
-                   strong deviations flag the sample before it ever reaches
-                   the scanner.</p>
+                <h4>Cry &rarr; mail &rarr; imprint</h4>
+                <p>One vial, one petri dish, one dropper, one pH strip. The
+                   rest happens in the lab and on the substrate you keep.</p>
               </div>
             </li>
           </ol>
@@ -1763,9 +1900,9 @@
           is a <span class="italic">fingerprint.</span>
         </h2>
         <p class="section-lead">
-          No two tears dry the same way. What started as scientific data also
-          became a visual archive of shapes that feel like ferns, rivers, and
-          constellations.
+          Every dendrite is shaped by your biology, your mood, your moment.
+          What started as scientific data also became a visual archive of
+          shapes that feel like ferns, rivers, and constellations.
         </p>
       </div>
 
@@ -1872,12 +2009,12 @@
             </div>
           </div>
           <div class="product-info">
-            <h3>Monster can<br><span class="italic">one crate, no reprint.</span></h3>
+            <h3>Monster can<br><span class="italic">24 cans. Never for sale.</span></h3>
             <p class="blurb">
-              We bought a crate. We printed the model's highest-scoring tear
-              on the side. It is, and is not, a real product. It is a fair
-              question what this says about the studio, and we refuse to
-              answer it.
+              Printed with the tear our ML team cried at 4am. One crate only,
+              Hack Košice 2026. It is, and is not, a real product — a fair
+              question what this says about the studio, which we refuse to
+              answer.
             </p>
           </div>
         </div>
@@ -1906,6 +2043,21 @@
   </footer>
 
   <script>
+    const nav = document.querySelector('nav');
+    const burger = document.querySelector('.nav-burger');
+    if (burger && nav) {
+      burger.addEventListener('click', () => {
+        const open = nav.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      nav.querySelectorAll('ul a').forEach(a => {
+        a.addEventListener('click', () => {
+          nav.classList.remove('is-open');
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
     document.querySelectorAll('.tab-bar .tab').forEach(tab => {
       tab.addEventListener('click', () => {
         const id = tab.dataset.product;
